@@ -1,6 +1,7 @@
 # ProductApiDemo
 
-A simple ASP.NET Core Web API built to practice core backend development concepts such as layered architecture, dependency injection, middleware, RESTful routing, and Entity Framework Core.
+This project was created to strengthen my understanding of fundamental .NET backend development concepts by building a layered Web API with database integration, middleware, filtering, and pagination.
+
 
 ## Tech Stack
 
@@ -12,7 +13,7 @@ A simple ASP.NET Core Web API built to practice core backend development concept
 
 ## Project Structure
 
-- `ProductApiDemo.Entities` – domain models
+- `ProductApiDemo.Entities` – domain models and request parameters
 - `ProductApiDemo.Repositories` – data access layer
 - `ProductApiDemo.Services` – business logic layer
 - `ProductApiDemo.WebAPI` – API layer and middleware
@@ -24,8 +25,11 @@ A simple ASP.NET Core Web API built to practice core backend development concept
 - Dependency Injection
 - EF Core with SQL Server
 - Configuration via `appsettings.json`
-- Custom middleware for request logging
 - Swagger integration for API testing
+- Custom request logging middleware
+- Global exception handling middleware
+- LINQ-based filtering
+- Pagination support
 
 ## Endpoints
 
@@ -35,10 +39,26 @@ A simple ASP.NET Core Web API built to practice core backend development concept
 - `PUT /api/products/{id}`
 - `DELETE /api/products/{id}`
 
-## Database Setup
+## Query Support
+
+The `GET /api/products` endpoint supports:
+
+- filtering by `Name`
+- filtering by `MinPrice`
+- filtering by `MaxPrice`
+- pagination with `PageNumber`
+- pagination with `PageSize`
+
+Example:
+
+```text
+/api/products?Name=Pen&MinPrice=50&PageNumber=1&PageSize=5
+
+
+Database Setup
 
 Run the following commands in Package Manager Console:
-
-```powershell
 Add-Migration InitialCreate
 Update-Database
+
+
