@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductApiDemo.Entities.Models;
+using ProductApiDemo.Entities.RequestFeatures;
 using ProductApiDemo.Services.Contracts;
-using System;
 
 namespace ProductApiDemo.WebAPI.Controllers
 {
@@ -17,9 +17,9 @@ namespace ProductApiDemo.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] ProductParameters productParameters)
         {
-            var products = _service.GetAllProducts();
+            var products = _service.GetAllProducts(productParameters);
             return Ok(products);
         }
 
@@ -37,47 +37,22 @@ namespace ProductApiDemo.WebAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Product product)
         {
-            try
-            {
-                var createdProduct = _service.AddProduct(product);
-                return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var createdProduct = _service.AddProduct(product);
+            return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);
         }
 
         [HttpPut("{id:int}")]
         public IActionResult Update(int id, [FromBody] Product product)
         {
-            try
-            {
-                _service.UpdateProduct(id, product);
-                return NoContent();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            _service.UpdateProduct(id, product);
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _service.DeleteProduct(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            _service.DeleteProduct(id);
+            return NoContent();
         }
     }
 }

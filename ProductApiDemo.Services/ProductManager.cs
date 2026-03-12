@@ -1,4 +1,5 @@
 ﻿using ProductApiDemo.Entities.Models;
+using ProductApiDemo.Entities.RequestFeatures;
 using ProductApiDemo.Repositories.Contracts;
 using ProductApiDemo.Services.Contracts;
 using System;
@@ -15,10 +16,11 @@ namespace ProductApiDemo.Services
             _repository = repository;
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts(ProductParameters productParameters)
         {
-            return _repository.GetAll();
+            return _repository.GetAll(productParameters);
         }
+        //service artık filtreleme ve pagination bilgilerini repository’ye geçiriyor.
 
         public Product? GetProductById(int id)
         {

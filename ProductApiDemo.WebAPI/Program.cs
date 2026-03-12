@@ -1,10 +1,10 @@
-using ProductApiDemo.WebAPI.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using ProductApiDemo.Repositories;
 using ProductApiDemo.Repositories.Context;
 using ProductApiDemo.Repositories.Contracts;
 using ProductApiDemo.Services;
 using ProductApiDemo.Services.Contracts;
+using ProductApiDemo.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,7 @@ builder.Services.AddScoped<IProductService, ProductManager>();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<RequestLoggingMiddleware>();
 
 
